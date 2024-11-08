@@ -1,18 +1,32 @@
 import { useState } from "react";
-
+import axios from "axios";
 const Create = () => {
 
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
     const [poster, setPoster] = useState('');
 
+   // configure Express to handle POST requests
+   //and log the data received from the React frontend
     const handleSubmit = (e) => {
         e.preventDefault();
-        const movie = {title,year,poster};
-        console.log(movie);
-    }
+    
+        console.log(`Title: ${title}, Year: ${year}, Poster: ${poster}`);
+    
+        const movie = {
+        title: title,
+        year: year,
+        poster: poster
+        };
+        
+        //axios sitting and handle the request from website
+        axios.post('http://localhost:4000/api/movies', movie)
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err.data));
+    };
 
     return (
+        //the form to fill in 
         <div>
             <h3>Hello from create component!</h3>
             <form onSubmit={handleSubmit}>
